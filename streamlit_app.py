@@ -77,13 +77,25 @@ API_URL = "http://127.0.0.1:8000"
 # LOAD MODEL INFORMATION
 # =========================================================
 
-model_name = "Logistic Regression"
+# Load and identify the actual saved model
+MODEL_PATH = "final_model.pkl"
 
 try:
-    model = joblib.load("final_model.pkl")
+    model = joblib.load(MODEL_PATH)
+
+    print("Loaded model class:", type(model).__name__)
+
+    if hasattr(model, "steps"):
+        print("Final estimator:", type(model.steps[-1][1]).__name__)
+
     model_name = type(model).__name__
-except:
-    pass
+
+    if hasattr(model, "steps"):
+        model_name = type(model.steps[-1][1]).__name__
+
+except Exception as e:
+    print("Model loading error:", e)
+    model_name = "Model Not Loaded"
 
 # =========================================================
 # LOAD METRICS
