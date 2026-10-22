@@ -9,6 +9,11 @@ app = FastAPI(title="Customer Churn Prediction API")
 model = joblib.load("final_model.pkl")
 preprocessor = joblib.load("preprocessor.pkl")
 
+print("Loaded model:", type(model).__name__)
+
+if hasattr(model, "steps"):
+    print("Final estimator:", type(model.steps[-1][1]).__name__)
+
 
 class CustomerData(BaseModel):
     gender: str
